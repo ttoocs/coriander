@@ -19,3 +19,4 @@ foreach(PLUGIN_CMAKE ${PLUGIN_CMAKES})
 endforeach()
 
 include(${COCL_CMAKE_DIR}/cocl_impl.cmake)
+include(${COCL_CMAKE_DIR}/cocl_cuda_fudge.cmake)
