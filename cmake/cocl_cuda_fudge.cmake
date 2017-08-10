@@ -1,8 +1,10 @@
 ##COCL FUDGE. - Make things think COCL is CUDA.
 
-set(CVCOCLPRE "Cuda via Cuda on openCL: ")
 
-macro(ENABLE_CUDA_FUDGE)
+#TIL: This cannot be a macro, as it will replace the internal macros's ${ARGN} and whatnot.
+
+function(ENABLE_CUDA_FUDGE)
+  set(CVCOCLPRE "Cuda via Cuda on openCL: ")
   message("Enabling cuda compiling via Cuda on openCL.")
   
 #  if(NOT COMMAND cocl_add_library)
@@ -16,7 +18,7 @@ macro(ENABLE_CUDA_FUDGE)
   else()
     message( "${CVCOCLPRE} Enabling") 
     
-    set(CUDA_VIA_COCL TRUE)
+    set(CUDA_VIA_COCL TRUE PARENT_SCOPE)
 
     macro(CUDA_COMPILE name)
 	    message( "Cuda-Compiling via COCL: ${name}")
@@ -40,10 +42,10 @@ macro(ENABLE_CUDA_FUDGE)
 		  cocl_add_executable("${name}" ${ARGN})
 	  endmacro()
 
-    set(CUDA_LIBRAREIS ${Coriander_LIBRARIES})
-  	set(CUDA_VERSION_STRING 8.0)
-   	set(CUDA_FOUND TRUE)
+    set(CUDA_LIBRAREIS ${Coriander_LIBRARIES} PARENT_SCOPE)
+  	set(CUDA_VERSION_STRING 8.0 PARENT_SCOPE)
+   	set(CUDA_FOUND TRUE PARENT_SCOPE)
     
   endif()
 
-endmacro()
+endfunction()
